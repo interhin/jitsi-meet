@@ -1,11 +1,6 @@
-import { VIRTUAL_BACKGROUND_TYPE } from '../../virtual-background/constants';
+import { VIRTUAL_BACKGROUND_TYPE } from "../../virtual-background/constants";
 
-import {
-    CLEAR_TIMEOUT,
-    SET_TIMEOUT,
-    TIMEOUT_TICK,
-    timerWorkerScript
-} from './TimerWorker';
+import { CLEAR_TIMEOUT, SET_TIMEOUT, TIMEOUT_TICK, timerWorkerScript } from "./TimerWorker";
 
 export interface IBackgroundEffectOptions {
     height: number;
@@ -57,9 +52,9 @@ export default class JitsiStreamBackgroundEffect {
         this._options = options;
 
         if (this._options.virtualBackground.backgroundType === VIRTUAL_BACKGROUND_TYPE.IMAGE) {
-            this._virtualImage = document.createElement('img');
-            this._virtualImage.crossOrigin = 'anonymous';
-            this._virtualImage.src = this._options.virtualBackground.virtualSource ?? '';
+            this._virtualImage = document.createElement("img");
+            this._virtualImage.crossOrigin = "anonymous";
+            this._virtualImage.src = this._options.virtualBackground.virtualSource ?? "";
         }
 
         this._model = model;
@@ -70,23 +65,23 @@ export default class JitsiStreamBackgroundEffect {
 
         this._onMaskFrameTimer = this._onMaskFrameTimer.bind(this);
 
-        this._outputCanvasElement = document.createElement('canvas');
-        this._outputCanvasElement.getContext('2d');
+        this._outputCanvasElement = document.createElement("canvas");
+        this._outputCanvasElement.getContext("2d");
 
-        this._inputVideoElement = document.createElement('video');
+        this._inputVideoElement = document.createElement("video");
 
-        this._segmentationMaskCanvas = document.createElement('canvas');
+        this._segmentationMaskCanvas = document.createElement("canvas");
         this._segmentationMaskCanvas.width = this._options.width;
         this._segmentationMaskCanvas.height = this._options.height;
-        this._segmentationMaskCtx = this._segmentationMaskCanvas.getContext('2d');
+        this._segmentationMaskCtx = this._segmentationMaskCanvas.getContext("2d");
 
-        this._inputResizeCanvas = document.createElement('canvas');
+        this._inputResizeCanvas = document.createElement("canvas");
         this._inputResizeCanvas.width = this._options.width;
         this._inputResizeCanvas.height = this._options.height;
-        this._inputResizeCtx = this._inputResizeCanvas.getContext('2d');
+        this._inputResizeCtx = this._inputResizeCanvas.getContext("2d");
     }
 
-    _onMaskFrameTimer(response: { data: { id: number; }; }) {
+    _onMaskFrameTimer(response: { data: { id: number } }) {
         if (response.data.id === TIMEOUT_TICK) {
             this._renderMask();
         }
@@ -99,12 +94,13 @@ export default class JitsiStreamBackgroundEffect {
 
         this._maskFrameTimerWorker.postMessage({
             id: SET_TIMEOUT,
-            timeMs: 1000 / FPS
+            timeMs: 1000 / FPS,
         });
     }
 
     _resizeSourceForModel() {
-        this._inputResizeCtx?.drawImage( // @ts-ignore
+        this._inputResizeCtx?.drawImage(
+            // @ts-ignore
             this._inputVideoElement,
             0,
             0,
@@ -116,12 +112,7 @@ export default class JitsiStreamBackgroundEffect {
             this._options.height
         );
 
-        const imageData = this._inputResizeCtx?.getImageData(
-            0,
-            0,
-            this._options.width,
-            this._options.height
-        );
+        const imageData = this._inputResizeCtx?.getImageData(0, 0, this._options.width, this._options.height);
         const inputMemoryOffset = this._model._getInputMemoryOffset() / 4;
 
         for (let i = 0; i < this._segmentationPixelCount; i++) {
@@ -150,10 +141,7 @@ export default class JitsiStreamBackgroundEffect {
         }
 
         if (!this._segmentationMask) {
-            this._segmentationMask = new ImageData(
-                this._options.width,
-                this._options.height
-            );
+            this._segmentationMask = new ImageData(this._options.width, this._options.height);
         }
 
         const prevA = this._prevAlpha;
@@ -183,13 +171,7 @@ export default class JitsiStreamBackgroundEffect {
             prevA[i] = s;
 
             const was = prevB[i];
-            const isPerson = was
-                ? s >= THRESH_DOWN
-                    ? 1
-                    : 0
-                : s >= THRESH_UP
-                    ? 1
-                    : 0;
+            const isPerson = was ? (s >= THRESH_DOWN ? 1 : 0) : s >= THRESH_UP ? 1 : 0;
 
             prevB[i] = isPerson;
 
@@ -231,12 +213,14 @@ export default class JitsiStreamBackgroundEffect {
         this._outputCanvasElement.height = height;
         this._outputCanvasElement.width = width;
 
-        this._outputCanvasCtx.globalCompositeOperation = 'copy';
-        this._outputCanvasCtx.filter = backgroundType === VIRTUAL_BACKGROUND_TYPE.IMAGE
-            ? `blur(${MASK_EDGE_BLUR_IMAGE_PX}px)`
-            : `blur(${MASK_EDGE_BLUR_BLUR_PX}px)`;
+        this._outputCanvasCtx.globalCompositeOperation = "copy";
+        this._outputCanvasCtx.filter =
+            backgroundType === VIRTUAL_BACKGROUND_TYPE.IMAGE
+                ? `blur(${MASK_EDGE_BLUR_IMAGE_PX}px)`
+                : `blur(${MASK_EDGE_BLUR_BLUR_PX}px)`;
 
-        this._outputCanvasCtx.drawImage( // @ts-ignore
+        this._outputCanvasCtx.drawImage(
+            // @ts-ignore
             this._segmentationMaskCanvas,
             0,
             0,
@@ -248,15 +232,16 @@ export default class JitsiStreamBackgroundEffect {
             this._inputVideoElement.height
         );
 
-        this._outputCanvasCtx.globalCompositeOperation = 'source-in';
-        this._outputCanvasCtx.filter = 'none';
+        this._outputCanvasCtx.globalCompositeOperation = "source-in";
+        this._outputCanvasCtx.filter = "none";
         // @ts-ignore
         this._outputCanvasCtx.drawImage(this._inputVideoElement, 0, 0);
 
-        this._outputCanvasCtx.globalCompositeOperation = 'destination-over';
+        this._outputCanvasCtx.globalCompositeOperation = "destination-over";
 
         if (backgroundType === VIRTUAL_BACKGROUND_TYPE.IMAGE) {
-            this._outputCanvasCtx.drawImage( // @ts-ignore
+            this._outputCanvasCtx.drawImage(
+                // @ts-ignore
                 this._virtualImage,
                 0,
                 0,
@@ -267,29 +252,30 @@ export default class JitsiStreamBackgroundEffect {
             this._outputCanvasCtx.filter = `blur(${this._options.virtualBackground.blurValue}px)`;
             // @ts-ignore
             this._outputCanvasCtx.drawImage(this._inputVideoElement, 0, 0);
-            this._outputCanvasCtx.filter = 'none';
+            this._outputCanvasCtx.filter = "none";
         }
     }
 
     isEnabled(jitsiLocalTrack: any) {
-        return jitsiLocalTrack.isVideoTrack() && jitsiLocalTrack.videoType === 'camera';
+        return jitsiLocalTrack.isVideoTrack() && jitsiLocalTrack.videoType === "camera";
     }
 
     startEffect(stream: MediaStream) {
         this._stream = stream;
 
         this._maskFrameTimerWorker = new Worker(timerWorkerScript, {
-            name: 'Blur effect worker'
+            name: "Blur effect worker",
         });
         this._maskFrameTimerWorker.onmessage = this._onMaskFrameTimer;
 
         const firstVideoTrack = this._stream.getVideoTracks()[0];
-        const { height, frameRate, width }
-            = firstVideoTrack.getSettings ? firstVideoTrack.getSettings() : firstVideoTrack.getConstraints();
+        const { height, frameRate, width } = firstVideoTrack.getSettings
+            ? firstVideoTrack.getSettings()
+            : firstVideoTrack.getConstraints();
 
         this._outputCanvasElement.width = parseInt(width, 10);
         this._outputCanvasElement.height = parseInt(height, 10);
-        this._outputCanvasCtx = this._outputCanvasElement.getContext('2d');
+        this._outputCanvasCtx = this._outputCanvasElement.getContext("2d");
 
         this._inputVideoElement.width = parseInt(width, 10);
         this._inputVideoElement.height = parseInt(height, 10);
@@ -299,7 +285,7 @@ export default class JitsiStreamBackgroundEffect {
         this._inputVideoElement.onloadeddata = () => {
             this._maskFrameTimerWorker.postMessage({
                 id: SET_TIMEOUT,
-                timeMs: 1000 / FPS
+                timeMs: 1000 / FPS,
             });
         };
 
