@@ -133,8 +133,8 @@ const MAX_HEIGHT = 400;
 const useStyles = makeStyles()(theme => {
     return {
         contextMenu: {
-            backgroundColor: theme.palette.ui01,
-            border: `1px solid ${theme.palette.ui04}`,
+            backgroundColor: 'rgba(15, 23, 34, 0.92)',
+            border: '1px solid rgba(70, 135, 237, 0.18)',
             borderRadius: `${Number(theme.shape.borderRadius)}px`,
             boxShadow: '0px 1px 2px rgba(41, 41, 41, 0.25)',
             color: theme.palette.text01,

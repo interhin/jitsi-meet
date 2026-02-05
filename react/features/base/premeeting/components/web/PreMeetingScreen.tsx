@@ -109,7 +109,9 @@ const useStyles = makeStyles()(theme => {
             position: 'absolute',
             inset: '0 0 0 0',
             display: 'flex',
-            backgroundColor: theme.palette.ui01,
+            background: typeof interfaceConfig === 'object' && interfaceConfig.DEFAULT_BACKGROUND
+                ? interfaceConfig.DEFAULT_BACKGROUND
+                : theme.palette.ui01,
             zIndex: 252,
 
             '@media (max-width: 720px)': {

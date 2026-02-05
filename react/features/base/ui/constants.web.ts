@@ -254,7 +254,7 @@ export const commonStyles = (theme: Theme) => {
         },
 
         '.toolbox-content-items': {
-            background: theme.palette.ui01,
+            background: 'rgba(15, 23, 34, 0.6)',
             borderRadius: 6,
             margin: '0 auto',
             padding: 6,

@@ -305,7 +305,7 @@ const defaultStyles = (theme: Theme) => {
             height: '100%',
             width: '100%',
             borderRadius: '4px',
-            backgroundColor: theme.palette.ui02
+            backgroundColor: 'rgba(15, 23, 34, 0.55)'
         },
 
         borderIndicator: {
@@ -341,7 +341,7 @@ const defaultStyles = (theme: Theme) => {
             justifyContent: 'center',
             alignItems: 'center',
             overflow: 'hidden',
-            backgroundColor: theme.palette.ui02,
+            backgroundColor: 'rgba(15, 23, 34, 0.55)',
 
             '& img': {
                 maxWidth: '100%',
@@ -356,8 +356,8 @@ const defaultStyles = (theme: Theme) => {
             zIndex: 1,
             width: '100%',
             height: '100%',
-            backgroundColor: `${theme.palette.uiBackground}`,
-            opacity: 0.8
+            backgroundColor: 'rgba(15, 23, 34, 0.45)',
+            opacity: 1
         },
 
         keyboardPinButton: {

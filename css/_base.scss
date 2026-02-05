@@ -32,7 +32,7 @@ body {
     font-weight: 400;
     overflow: hidden;
     color: #F1F1F1;
-    background: #040404; // should match DEFAULT_BACKGROUND from interface_config
+    background: radial-gradient(900px 420px at 50% -10%, rgba(32, 125, 237, 0.25), rgba(15, 23, 34, 0)), #0f1722; // should match DEFAULT_BACKGROUND from interface_config
 }
 
 /**
