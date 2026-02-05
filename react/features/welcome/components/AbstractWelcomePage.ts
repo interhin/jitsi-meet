@@ -262,7 +262,8 @@ export class AbstractWelcomePage<P extends IProps> extends Component<P, IState> 
      * @returns {void}
      */
     _updateRoomName() {
-        const generatedRoomName = generateRoomWithoutSeparator();
+        const roomNames = [ 'Naruto', 'OnePiece', 'Bleach' ];
+        const generatedRoomName = roomNames[Math.floor(Math.random() * roomNames.length)];
         const roomPlaceholder = '';
         const updateTimeoutId = window.setTimeout(this._updateRoomName, 10000);
 

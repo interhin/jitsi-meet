@@ -5,7 +5,10 @@ body.welcome-page {
 
 .welcome {
     background-image: $welcomePageBackground;
-    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #131519;
     display: flex;
     flex-direction: column;
     font-family: $welcomePageFontFamily;
@@ -19,7 +22,7 @@ body.welcome-page {
         background-repeat: $welcomePageHeaderBackgroundRepeat;
         background-size: $welcomePageHeaderBackgroundSize;
         padding: $welcomePageHeaderPadding;
-        background-color: #131519;
+        background-color: rgba(0, 0, 0, 0.35);
         overflow: hidden;
         position: relative;
 
@@ -301,6 +304,9 @@ body.welcome-page {
     .welcome-card {
         width: 100%;
         border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
 
         &--dark {
             background: #444447;
@@ -308,7 +314,7 @@ body.welcome-page {
         }
 
         &--blue {
-            background: #D5E5FF;
+            background: rgba(255, 255, 255, 0.75);
         }
 
         &--grey {

@@ -69,10 +69,10 @@ $welcomePageWatermarkHeight: 32px;
  */
 $welcomePageDescriptionColor: #fff;
 $welcomePageFontFamily: inherit;
-$welcomePageBackground: none;
+$welcomePageBackground: url('../images/welcome-background.png');
 $welcomePageTitleColor: #fff;
 
-$welcomePageHeaderBackground: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../images/welcome-background.png');
+$welcomePageHeaderBackground: none;
 $welcomePageHeaderBackgroundPosition: center;
 $welcomePageHeaderBackgroundRepeat: none;
 $welcomePageHeaderBackgroundSize: cover;

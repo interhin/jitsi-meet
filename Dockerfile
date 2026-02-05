@@ -16,3 +16,5 @@ FROM jitsi/web:${JITSI_WEB_TAG}
 
 COPY --from=builder /app/libs /usr/share/jitsi-meet/libs
 COPY --from=builder /app/css /usr/share/jitsi-meet/css
+COPY --from=builder /app/images /usr/share/jitsi-meet/images
+COPY --from=builder /app/title.html /usr/share/jitsi-meet/title.html

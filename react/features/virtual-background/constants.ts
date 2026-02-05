@@ -25,6 +25,21 @@ export const BACKGROUNDS_LIMIT = 25;
 export const IMAGES: Array<Image> = [
     {
         tooltip: 'image1',
+        id: '0',
+        src: 'images/virtual-background/background-0.jpg'
+    },
+    {
+        tooltip: 'image2',
+        id: '01',
+        src: 'images/virtual-background/background-01.jpg'
+    },
+    {
+        tooltip: 'image3',
+        id: '02',
+        src: 'images/virtual-background/background-02.jpg'
+    },
+    {
+        tooltip: 'image1',
         id: '1',
         src: 'images/virtual-background/background-1.jpg'
     },
